@@ -1,0 +1,10 @@
+p-table tr th {
+    background-color: #e2e8f0 !important;
+}
+
+.table-container {
+    height: 100%; 
+    min-height: calc(100vh - 340px);
+    display: flex;
+    flex-direction: column;
+  }

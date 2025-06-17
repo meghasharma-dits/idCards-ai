@@ -1,0 +1,160 @@
+<div class="table-container">
+    <div class="card">
+        <p-toast /> @if (tableConfig.toolbarConfig.showToolbar) {
+        <p-toolbar styleClass="border-0 mt-3 flex gap-2 px-0 ml-4 mr-4">
+            <ng-template #start>
+                @if (tableConfig.toolbarConfig.isMessageSection) {
+                <div class="sync-status-container flex align-items-center gap-3 p-3 border-round" [ngClass]="{
+                       'bg-blue-50 border-blue-200': !tableConfig.syncError,
+                       'bg-red-50 border-red-200': tableConfig.syncError
+                    }">
+
+                    <!-- Animated spinner with sync icon -->
+                    @if (tableConfig.isSpinnerRunning) {
+                    <div class="relative">
+                        <i class="pi pi-sync text-xl animate-spin"></i>
+                        <!-- <i class="pi pi-circle-fill text-xs absolute bottom-0 right-0 text-blue-500"></i> -->
+                    </div>
+                    } @else {
+                    <i class="pi pi-check-circle text-xl" [ngClass]="{
+                             'text-green-500': !tableConfig.syncError,
+                             'text-red-500': tableConfig.syncError
+                          }"></i> }
+
+                    <!-- Status message with progress -->
+                    <div class="flex flex-column gap-1">
+                        <span class="font-medium text-sm">
+                           {{ tableConfig.isSpinnerRunning ? 'Syncing invoices...' : 
+                              (tableConfig.syncError ? 'Sync failed' : 'Sync complete') }}
+                       </span>
+                        <span> {{tableConfig.totalEmails}} </span>
+                        <span class="text-xs text-gray-600">
+                           {{ tableConfig.syncMessage }}
+                       </span>
+                    </div>
+
+                    <!-- Progress bar (optional) -->
+                    @if (tableConfig.isSpinnerRunning) {
+                    <p-progressBar mode="indeterminate" [style]="{ height: '4px' }" class="absolute bottom-0 left-0 right-0 w-full">
+                    </p-progressBar>
+                    }
+                </div>
+                } @if (tableConfig.toolbarConfig.showAdd) {
+                <p-button label="Add" icon="pi pi-plus" class="mr-2" (onClick)="AddNewRow()" /> } @if (tableConfig.toolbarConfig.showDelete) {
+                <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedAccount || !selectedAccount.length" /> }
+            </ng-template>
+
+            <ng-template #end>
+                <div class="tableFilter flex gap-3">
+                    @if (tableConfig.toolbarConfig.showSearch) {
+                    <div class="flex items-center justify-between">
+                        <p-iconfield>
+                            <p-inputicon styleClass="pi pi-search" />
+                            <input pInputText type="text" #value (input)="dt.filterGlobal(value.value, 'contains')" placeholder="Search..." />
+                        </p-iconfield>
+                    </div>
+                    } @if (tableConfig.toolbarConfig.showImport) {
+                    <p-fileupload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" auto customUpload class="mr-2 inline-block" [chooseButtonProps]="{ severity: 'secondary' }" /> } @if (tableConfig.toolbarConfig.showExport) {
+                    <p-button [disabled]="!tableData.length" label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV($event)" /> }
+                </div>
+            </ng-template>
+        </p-toolbar>
+        }
+        <p-card styleClass="bg-gray-100">
+            <p-table #dt [value]="tableData" [rows]="10" class="dashboardDataTable" [columns]="tableConfig.columns" [paginator]="true" [globalFilterFields]="getFilterFields()" [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="selectedAccount" [rowHover]="true"
+                dataKey="id" scrollable="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+                <!-- Header Template -->
+                <ng-template #header>
+                    <tr>
+                        @for (col of tableConfig.columns; track $index) { @if(col.field == 'checkBox') {
+                        <th pFrozenColumn style="width: 3rem">
+                            <p-tableHeaderCheckbox />
+                        </th>
+                        }@else {
+                            @if(col.sortable){
+                                <th [pSortableColumn]="col.field" [style.min-width]="col.minWidth || 'auto'">
+                                    {{ col.header }}
+                                    @if(col.sortable){
+                                        <p-sortIcon  [field]="col.field" />
+                                    }
+                                </th>
+                            }@else {
+                                    <th [style.min-width]="col.minWidth || 'auto'" 
+                                    alignFrozen="right" pFrozenColumn [frozen]="col.field === 'actions'">
+                                    {{ col.header }}
+                                </th>
+                            }
+                        } }
+                    </tr>
+                </ng-template>
+
+                <ng-template #body let-product>
+                    <tr [ngStyle]="rowStyle(product)">
+                        @for (col of tableConfig.columns; track $index) { @if(col.field == 'checkBox') {
+                        <td style="width: 3rem" pFrozenColumn>
+                            <p-tableCheckbox [value]="product" />
+                        </td>
+                        }@else{
+                        <td alignFrozen="right" pFrozenColumn [frozen]="col.field === 'actions'">
+
+                            <ng-container *ngIf="col.field !== 'actions'">
+                                @switch (col.type) {
+                                    @case ('amount') {
+                                        {{ product[col.field] | currency:'USD':'symbol':'1.0-2' }} 
+                                      }
+                                      @case ('date') {
+                                        {{ product[col.field] | date:'MMM d, y h:mm a' }} 
+                                      }
+                                      @default {
+                                        <span [innerHTML]="product[col.field] | lineBreakAfterSubject"></span>
+                                      }
+                                }
+                            </ng-container>
+
+                            <ng-container *ngIf="col.field === 'actions'">
+                                <p-button (click)="op.toggle($event)" [rounded]="true" class="mr-2" icon="pi pi-cog" [outlined]="true"></p-button>
+                                <p-popover #op>
+
+                                    <ng-container *ngIf="col.isDelete">
+                                        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="actionClick(product, 'edit')" />
+                                    </ng-container>
+                                    <ng-container *ngIf="col.isEdit">
+                                        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="actionClick(product, 'delete')" />
+                                    </ng-container>
+                                    <!-- Mark Paid Button -->
+                                    <ng-container *ngIf="col.canMarkPaid">
+                                        <p-button [label]="product.mark_as_paid ? 'Mark Unpaid' : 'Mark Paid'" [icon]="product.mark_as_paid ? 'pi pi-times' : 'pi pi-check'" [severity]="product.mark_as_paid ? 'warn' :'success'" class="mr-2" [rounded]="true" [outlined]="true" (click)="actionClick(product, 'markAsPaid')"
+                                        />
+                                    </ng-container>
+
+                                    <!-- View Original Button -->
+                                    <ng-container *ngIf="col.canViewOriginal">
+                                        <p-button label="View Original" icon="pi pi-eye" severity="info" class="mr-2" [rounded]="true" [outlined]="true" (click)="actionClick(product, 'viewOriginal')" />
+                                    </ng-container>
+
+                                    <!-- View Template Button -->
+                                    <ng-container *ngIf="col.canViewTemplate">
+                                        <p-button label="Invoice Template" icon="pi pi-file" severity="primary" class="mr-2" [rounded]="true" [outlined]="true" (click)="actionClick(product, 'viewTemplate')" />
+                                    </ng-container>
+
+                                    <!-- View JSON Button -->
+                                    <ng-container *ngIf="col.canViewJSON">
+                                        <p-button label="View JSON" icon="pi pi-code" class="mr-2" [rounded]="true" [outlined]="true" (click)="actionClick(product, 'viewJSON')" />
+                                    </ng-container>
+                                </p-popover>
+                            </ng-container>
+                        </td>
+                        } }
+                    </tr>
+                </ng-template>
+
+                <ng-template #emptymessage>
+                    <tr>
+                        <td [attr.colspan]="tableConfig.columns.length" style="text-align: center"> No data found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+        <p-confirmdialog [style]="{ width: '450px' }" />
+    </div>
+</div>

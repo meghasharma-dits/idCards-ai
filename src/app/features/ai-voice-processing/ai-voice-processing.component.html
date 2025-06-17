@@ -1,0 +1,54 @@
+<div class="form-container">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="grid grid-nogutter">
+            <div class="form-field col-12 md:col-6 mb-4 relative">
+                <p-floatlabel>
+                    <input class="w-full" id="voice_name" type="text" pInputText
+                        formControlName="voice_name" autocomplete="off" />
+                    <label id="voice_name">Voice name</label>
+                </p-floatlabel>
+            </div>
+            <div class="form-field col-12 md:col-6 mb-4 relative">
+                <p-fileupload mode="basic" name="demo[]" 
+                chooseIcon="pi pi-upload" 
+                url="https://www.primefaces.org/cdn/api/upload.php" accept="audio/*" maxFileSize="1000000" 
+                (onUpload)="onBasicUploadAuto($event)" [auto]="true" chooseLabel="Browse" />
+            </div>
+            <div class="form-field col-12 md:col-6 mb-4 relative">
+                <p-floatlabel class="w-full md:w-56">
+                    <p-select formControlName="voice_id" [options]="voicesList"
+                        optionLabel="voice_name" class="w-full md:w-56" />
+                    <label for="existing_voices">Existing voices</label>
+                </p-floatlabel>
+            </div>
+            <div class="form-field col-12 md:col-6 mb-4 relative">
+                <p-floatlabel>
+                    <textarea pTextarea id="voice_text" formControlName="voice_text" rows="5" cols="30" style="resize: none" class="h-full"></textarea>
+                    <label for="voice_text">Voice text</label>
+                </p-floatlabel>
+            </div>
+            <p-button label="Submit" type="submit" [disabled]="formGroup.invalid"></p-button>
+        </div>
+    </form>
+</div>
+
+<!--  -->
+<div>
+    <p-table [value]="allVoices" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                <th>Name</th>
+                <th>Audio</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-product>
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>  <audio #audioPlayer controls>
+                    <source src="path-to-your-audio-file.mp3" type="audio/mp3">
+                    Your browser does not support the audio element.
+                  </audio>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

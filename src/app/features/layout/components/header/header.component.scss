@@ -1,0 +1,61 @@
+.welcome-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    border: 1px solid #e9ecef;
+    p-menubar {
+        ::ng-deep{
+            .p-menubar {
+                border: none;
+                background: transparent;
+                .p-menubar-item-link-active {
+                    color: #0056b3;
+                    .p-menubar-item-icon {
+                        color: #0056b3;
+                      }
+                }
+            }
+        }
+    }
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid #ffffff; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-message {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2c3e50;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        animation: fadeIn 1s ease-in-out;   
+        span {
+            max-width: 210px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: right;
+        }    
+    }
+
+    .go-back-btn {
+       ::ng-deep .p-button {
+            width: 100% !important;
+            flex-direction: row-reverse;
+            align-items: center;
+            gap: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+}

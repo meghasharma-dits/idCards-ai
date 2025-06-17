@@ -1,0 +1,42 @@
+<div #tableContainer class="table-container">
+    <p-table [scrollable]="true" [scrollHeight]="scrollHeight" [value]="invoices" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr >
+                @for (col of columns; track $index) {
+                <th style="min-width: 200px;">{{ col.header }}</th>
+                }
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-invoice>
+            <tr>
+                @for (col of columns; track $index) {
+                <td style="min-width: 200px;">
+                    @if (col.field === 'action') {
+                        <div class="action-buttons" style="display: flex; gap: 10px;">
+                            <button pButton type="button" tooltipPosition="bottom" pTooltip="Export invoice" icon="pi pi-file-export" (click)="downloadFile(invoice)" class="p-button-sm p-button-outlined"></button>
+                            <button pButton type="button" tooltipPosition="bottom" pTooltip="Download File" icon="pi pi-download" (click)="downloadOriginalFile(invoice)" class="p-button-sm p-button-outlined"></button>
+                          </div>
+                    } @else if (['Igst', 'Vat', 'Sgst', 'Cgst'].includes(col.header)) {
+                        <div class="tax-details">
+                            @if (invoice[col.field]?.rate) {
+                                <div class="tax-rate">
+                                    <span class="label">Rate: </span>
+                                    <span class="value">{{ invoice[col.field].rate }}</span>
+                                </div>
+                            }
+                            @if (invoice[col.field]?.amount) {
+                                <div class="tax-amount">
+                                    <span class="label">Amount: </span>
+                                    <span class="value"> {{ invoice[col.field].amount | currency}}</span>
+                                </div>
+                            }
+                        </div>
+                    } @else {
+                        {{ invoice[col.field] }}
+                    }
+                </td>
+                }
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

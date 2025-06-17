@@ -1,0 +1,30 @@
+.chip-container {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    p-chip{
+      font-size: 16px;
+      padding: 6px;
+    }
+  
+    .input-wrapper {
+      width: 100%;
+      display: flex;
+      gap: 0.5rem;
+      
+      input {
+        flex-grow: 1;
+      }
+    }
+  
+    .chips-wrapper {
+      display: flex;
+      gap: 0.5rem;
+      min-height: 2.5rem; // Prevent layout shift when no chips
+      align-items: center;
+    }
+  
+    .max-message {
+      margin-top: -0.25rem;
+    }
+  }

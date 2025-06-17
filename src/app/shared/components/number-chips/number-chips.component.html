@@ -1,0 +1,36 @@
+<div class="chip-container flex gap-2 border-1 border-gray-300 border-round pl-1 pr-1">
+     <!-- Chips displayed below the input -->
+     @if (numberChips.length > 0) {
+        <div class="chips-wrapper">
+            @for (chip of numberChips; track $index) {
+              <p-chip 
+                [removable]="true"
+                (onRemove)="removeChip($index)"
+                label="{{ chip }}">
+              </p-chip>
+            }
+          </div>
+     }
+    <!-- Input field at the top -->
+    <div class="input-wrapper align-items-center">
+      <input pInputText 
+      class="border-none w-full"
+             type="text"
+             [formControl]="numberInput"
+             (keydown)="handleKeyDown($event)"
+             placeholder="Invoice Due days"
+             inputmode="numeric"
+             [disabled]="numberChips.length >= maxChips">
+      
+      <p-button icon="pi pi-plus"
+                [disabled]="!numberInput.value || numberChips.length >= maxChips"
+                (click)="addNumber()">
+      </p-button>
+    </div>
+  
+  </div>
+  @if (numberChips.length >= maxChips) {
+      <small  class="max-message p-error text-red-500 absolute left-3 mt-1">
+        Maximum of {{ maxChips }} numbers reached (remove some to add new ones)
+      </small>
+  }

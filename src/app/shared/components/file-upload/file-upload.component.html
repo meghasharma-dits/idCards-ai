@@ -1,0 +1,49 @@
+<p-toast></p-toast>
+<p-fileupload #fileUpload name="myfile[]" [fileLimit]="3" [multiple]="true" [accept]="acceptedFileTypes" maxFileSize="5000000" (onUpload)="onTemplatedUpload()" (onSelect)="onSelectedFiles($event)">
+    <ng-template #header let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
+        <div class="flex flex-wrap justify-content-between align-items-center flex-1 gap-4">
+            <div class="flex gap-2">
+                <p-button (onClick)="choose($event, chooseCallback)" icon="pi pi-images" [rounded]="true" [outlined]="true"></p-button>
+                <p-button (onClick)="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success" [disabled]="!files || files.length === 0 || files.length > 3"></p-button>
+                <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true" [outlined]="true" severity="danger" [disabled]="!files || files.length === 0"></p-button>
+            </div>
+            <p-progressbar [value]="totalSizePercent" [showValue]="true" class="w-full" styleClass="h-1 w-full md:ml-auto">
+            </p-progressbar>
+            <!-- <div class="whitespace-nowrap">{{ totalSize }}B / 5Mb</div> -->
+        </div>
+    </ng-template>
+    <ng-template #content let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback" let-removeUploadedFileCallback="removeUploadedFileCallback">
+        <div class="flex flex-colunm gap-8 pt-4">
+            <div *ngIf="files?.length > 0">
+                <!-- <h5 class="text-lg font-semibold mb-3 mt-0">Pending</h5> -->
+                <div class="flex flex-wrap gap-4">
+                    <div *ngFor="let file of files; let i = index" class="p-4 border-round-md flex flex-column border-1 border-200 align-items-center gap-4">
+                        <div class="fileInformation flex flex-column gap-4 align-items-center">
+                            @if (file.objectURL) {
+                                <span class="fileThumbnail">
+                                    <img class="max-w-full" role="presentation" [alt]="file.name" [src]="file.objectURL" width="100" height="70">
+                                </span>
+                            }
+                            @else {
+                                    <i class="pi pi-file text-5xl"></i>
+                            }
+                            <span class="font-semibold text-overflow-ellipsis max-w-16rem white-space-nowrap overflow-hidden">{{ file.name }}</span>
+                            <div>{{ formatSize(file.size) }}</div>
+                        </div>
+                        <div class="statusWrapper flex flex-column gap-3 align-items-center">
+                            <p-badge value="Pending" severity="warn"></p-badge>
+                            <p-button icon="pi pi-times" (click)="onRemoveTemplatingFile($event, file, removeFileCallback, i)" [outlined]="true" [rounded]="true" severity="danger"></p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #file></ng-template>
+    <ng-template #empty>
+        <div class="flex align-items-center justify-content-center flex-column">
+            <i class="pi pi-cloud-upload border-2 text-color-secondary  border-200 border-circle p-5 text-5xl !text-muted-color"></i>
+            <p class="mt-6 mb-0 font-semibold text-color-secondary">Drag and drop files to here to upload.</p>
+        </div>
+    </ng-template>
+</p-fileupload>

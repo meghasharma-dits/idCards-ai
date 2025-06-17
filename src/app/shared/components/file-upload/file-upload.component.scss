@@ -1,0 +1,28 @@
+.fileInformation {
+    flex: 1;
+    .fileThumbnail {
+        width: 100px;
+        height: 80px;
+        object-fit: contain;
+        border: 1px solid #c1c0c0;
+        padding: 5px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center img {
+            object-fit: contain;
+        }
+    }
+}
+p-fileupload {
+    ::ng-deep {
+        .p-fileupload-advanced {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            .p-fileupload-content {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+.info-icon{
+    position: absolute;
+    top: 9px;
+    right: 5px;
+}
+.required-field span:not(.sr-only) {
+    color: #dc3545; /* Red color for required indicator */
+  }
+  

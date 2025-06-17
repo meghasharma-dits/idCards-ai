@@ -1,0 +1,39 @@
+.addressSection {
+    max-width: 350px;
+}
+p-table {
+    tr {
+        th {
+        
+        }
+        th,td {
+            font-size: 14px;
+            padding: 8px;
+        }
+    }
+}
+.invoice-container {
+
+    .invoice-header {
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 1rem;
+    }
+    
+    .invoice-customer {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+    }
+    
+    .invoice-summary {
+      border-top: 1px solid #dee2e6;
+      padding-top: 1rem;
+    }
+    
+    .invoice-footer {
+      border-top: 1px solid #dee2e6;
+      padding-top: 1rem;
+      font-style: italic;
+      color: #6c757d;
+    }
+  }

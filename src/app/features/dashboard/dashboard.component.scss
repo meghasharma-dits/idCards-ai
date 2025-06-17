@@ -1,0 +1,64 @@
+.invoiceDashboard {
+    p-card {
+        border-radius: var(--p-card-border-radius);
+        overflow: hidden;
+        box-shadow: var(--p-card-shadow);
+        
+        ::ng-deep {
+            .p-card {
+                width: 100%;
+                background-color: transparent;
+                box-shadow: none;
+            }
+        }
+        &:nth-child(1) {
+            background-color: #dbeafe;
+        }
+        &:nth-child(2) {
+            background-color: #e0dcfc;
+        }
+        &:nth-child(3) {
+            background-color: #fef9c3;
+        }
+        &:nth-child(4) {
+            background-color: #fee2e2;
+        }
+        &:nth-child(5) {
+            background-color: #dcfce7;
+        }
+        &:n
+        h2 {
+            font-size: 35px;
+        }
+    }
+    .filterWrapper {
+        form {
+            p-select {
+                max-width: 300px;
+            }
+           
+        }
+    } 
+    .invoiceValueCard {
+        @media(max-width: 575px) {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+        }
+    }   
+
+}
+
+.invoiceValueCard {
+    p-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+    
+    h2 {
+      transition: color 0.3s ease;
+    }
+  }
