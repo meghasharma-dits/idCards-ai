@@ -29,6 +29,8 @@ export class IdCardsComponent {
     columns: ["id_type", "id_number", "name", "dob", "issue_date", "expiry_date", "address", "organization", 'action'],
     fileDownloadUrl: this.envUrl + ApiEndpoints.IdDownload
   };
+  acceptedFileTypes ='.jpeg,.jpg,.png,.webp';
+
 
   constructor(
     public dialogService: DialogService, 
