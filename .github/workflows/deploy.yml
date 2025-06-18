@@ -3,7 +3,7 @@ name: Deploy idCards-ai
 on:
   push:
     branches:
-      - none
+      - devops
 
 jobs:
   deploy:
