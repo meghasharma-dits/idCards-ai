@@ -5,16 +5,8 @@
                 <i class="pi pi-minus"></i>
             </ng-template>
             <p-tab value="0">
-                <i class="pi pi-credit-card"></i>
-                <span class="font-bold whitespace-nowrap">Invoices</span>
-            </p-tab>
-            <p-tab value="1">
                 <i class="pi pi-id-card"></i>
                 <span class="font-bold whitespace-nowrap">ID Cards</span>
-            </p-tab>
-            <p-tab value="2">
-                <i class="pi pi-envelope"></i>
-                <span class="font-bold whitespace-nowrap">Mail linking</span>
             </p-tab>
             <ng-template #nexticon>
                 <i class="pi pi-plus"></i>
@@ -22,13 +14,7 @@
         </p-tablist>
         <p-tabpanels>
             <p-tabpanel value="0">
-                <app-invoice></app-invoice>
-            </p-tabpanel>
-            <p-tabpanel value="1">
                <app-id-cards></app-id-cards>
-            </p-tabpanel>
-            <p-tabpanel value="2">
-                <app-mail-linking></app-mail-linking>
             </p-tabpanel>
         </p-tabpanels>
     </p-tabs>

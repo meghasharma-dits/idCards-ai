@@ -1,11 +1,9 @@
 <div class="welcome-container flex justify-content-between p-0">
-    <p-menubar [model]="headerItems" >
-    </p-menubar>
-    <div class="flex gap-3 align-items-center">
-        <p-button class="go-back-btn" icon="pi icon pi-arrow-left" [outlined]="true" (onClick)="redirectToProdListing()" >Go back to Product Listing</p-button>
-        <div class="card flex justify-right">
-            <p-menu #menu [model]="items" [popup]="true" />
-            <p-button class="pr-2"  icon="pi icon pi-user" (click)="menu.toggle($event)" [rounded]="true" [outlined]="true" />
-        </div>
+    <div class="header-logo">
+        <img src="public/logo.png" alt="">
+    </div>
+    <div class="back-btn">
+        <p-button class="go-back-btn" icon="pi icon pi-arrow-left" [outlined]="true"
+            (onClick)="redirectToProdListing()">Go back to Product Listing</p-button>
     </div>
 </div>
