@@ -1,4 +1,4 @@
 export const environment = {
-    apiUrl:  `https://simple-jay-namely.ngrok-free.app`,
-    redirectUrl: 'http://localhost:64001/',
+  apiUrl: 'http://134.209.149.55:5000',
+  redirectUrl: 'http://134.209.149.55:82',
 };
