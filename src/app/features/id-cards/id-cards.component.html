@@ -1,6 +1,6 @@
 <div class="upload-card-container grid">
     <div class="upload-section col-5">
-        <app-file-upload
+        <app-file-upload [acceptedFileTypes]="acceptedFileTypes"
             [apiEndpoint]="envUrl + uploadIdCardURL"
             (invoiceDetail)="getIdCardDetail($event)">
         </app-file-upload>
