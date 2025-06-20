@@ -22,6 +22,9 @@ jobs:
           script: |
             echo "==> Moving to project directory"
             cd ~/Dits-AI/idCards-ai
+            
+            echo "==> Configuring Git to use PAT"
+            git remote set-url origin https://x-access-token:${{ secrets.GIT_PAT }}@github.com/meghasharma-dits/idCards-ai.git
 
             echo "==> Pulling latest changes from devops branch"
             # git reset --hard
@@ -38,6 +41,6 @@ jobs:
             docker build -t idcardsai .
 
             echo "==> Running container"
-            docker run -d -p 83:80 --name idcardsai idcardsai
+            docker run -d -p 8082:80 --name idcardsai idcardsai
 
             echo "==> Deployment complete"
