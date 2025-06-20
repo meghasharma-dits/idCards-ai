@@ -7,5 +7,5 @@ RUN npm run build --configuration=production
 FROM nginx:latest
 COPY --from=build /app/dist/invoice-ai/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-EXPOSE 83
+EXPOSE 8082
 CMD ["nginx", "-g", "daemon off;"]
