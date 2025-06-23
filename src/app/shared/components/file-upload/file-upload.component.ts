@@ -19,7 +19,7 @@ import { ToastModule } from 'primeng/toast';
 })
 export class FileUploadComponent {
   @ViewChild('fileUpload') fileUpload!: FileUpload;
-  @Input() acceptedFileTypes: string = '.xlsx,.xls,.csv,.jpeg,.jpg,.png,.doc,.docx,.pdf';
+  @Input() acceptedFileTypes!: string;
   @Input() apiEndpoint: string = '';
 
   @Output() invoiceDetail = new EventEmitter<any>();

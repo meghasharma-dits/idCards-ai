@@ -10,15 +10,18 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
-    provideAnimationsAsync(),
+  provideAnimationsAsync(),
     DynamicDialogConfig,
-    provideHttpClient(
-      withInterceptors([AuthInterceptor]),
-    ),
-    providePrimeNG({
-        theme: {
-            preset: Aura
-        }
-    })
+  provideHttpClient(
+    withInterceptors([AuthInterceptor]),
+  ),
+  providePrimeNG({
+    theme: {
+      preset: Aura,
+      options: {
+        darkModeSelector: false          // ✅ disable dark mode completely
+      }
+    }
+  })
   ]
 };
