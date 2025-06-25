@@ -1,7 +1,6 @@
 <div class="welcome-container flex justify-content-between p-0">
-    <div class="header-logo">
-        <img src="public/logo.png" alt="">
-    </div>
+    <p-menubar [model]="headerItems" >
+    </p-menubar>
     <div class="back-btn">
         <p-button class="go-back-btn" icon="pi icon pi-arrow-left" [outlined]="true"
             (onClick)="redirectToProdListing()">Go back to Product Listing</p-button>

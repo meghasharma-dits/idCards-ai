@@ -10,6 +10,6 @@ export const redirectionGuard: CanActivateFn = () => {
     return true;
   }
 
-  router.navigate(['/invoice']);
+  router.navigate(['/introduction']);
   return false;
 };
